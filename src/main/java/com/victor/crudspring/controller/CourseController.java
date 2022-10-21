@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/courses")
@@ -22,6 +23,15 @@ public class CourseController {
     @GetMapping // mesmo que @RequestMapping(method.get)
     public List<Course> list() {
         return courseRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Course> findByid(@PathVariable Long id){
+       return courseRepository.findById(id)
+               .map(course -> ResponseEntity.ok().body(course))
+               .orElse(ResponseEntity.notFound().build());
+        //aqui ResponseEntity ja retorna um Optional, nao precisa declarar de novo
+        //Usamos map caso ache resultado e orElse caso nao ache
     }
 
     @PostMapping
