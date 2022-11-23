@@ -58,5 +58,13 @@ public class CourseController {
             return ResponseEntity.ok().body(updated);
         }).orElse(ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete (@PathVariable Long id){
+        return courseRepository.findById(id).map(recordFound -> {
+            courseRepository.delete(recordFound);
+            return ResponseEntity.noContent().<Void>build(); //necessário cast para vazio pois delete retorna VOID
+        }).orElse(ResponseEntity.notFound().build());
+    }
 }
 
