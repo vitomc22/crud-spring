@@ -2,55 +2,41 @@ package com.victor.crudspring.controller;
 
 import com.victor.crudspring.model.Course;
 import com.victor.crudspring.repository.CourseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
+@Validated //faz todas validações das anotações de validações
 @RestController
 @RequestMapping("/api/courses")
 public class CourseController {
+    @Autowired
+    CourseRepository courseRepository;
 
-    private final CourseRepository courseRepository;
-
-    public CourseController(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-    } // usando injeção de dependencia via construtor ao invés do Autowired
-    // boa prática
-
-    @GetMapping // mesmo que @RequestMapping(method.get)
+    @GetMapping
     public List<Course> list() {
         return courseRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Course> findByid(@PathVariable Long id) {
+    public ResponseEntity<Course> findByid(@PathVariable @NotNull @Positive Long id) { //nao pode vazio e somente numero positivo
         return courseRepository.findById(id).map(recordFound -> ResponseEntity.ok().body(recordFound)).orElse(ResponseEntity.notFound().build());
-        //aqui ResponseEntity ja retorna um Optional, nao precisa declarar de novo
-        //Usamos map caso ache resultado e orElse caso nao ache
     }
 
     @PostMapping
-    public ResponseEntity<Course> create(@RequestBody Course course) {
+    public ResponseEntity<Course> create(@RequestBody @Valid Course course) {
         return ResponseEntity.status(HttpStatus.CREATED).body(courseRepository.save(course));
-
     }
 
-    //victor
-    /*@PutMapping("/{id}")
-    public ResponseEntity<Optional<Course>> update(@PathVariable Long id, @RequestBody Course course){
-        Optional<Course> recordFound =  courseRepository.findById(id);
-        recordFound.get().setName(course.getName());
-        recordFound.get().setCategory(course.getCategory());
-        courseRepository.save(recordFound.get());
-        return ResponseEntity.ok().body(recordFound);
-
-    }; */
-
-    //loiane style
     @PutMapping("/{id}")
-    public ResponseEntity<Course> update(@PathVariable Long id, @RequestBody Course course) {
+    public ResponseEntity<Course> update(@PathVariable Long id, @RequestBody @Valid Course course) {
         return courseRepository.findById(id).map(recordFound -> {
             recordFound.setName(course.getName());
             recordFound.setCategory(course.getCategory());
@@ -60,7 +46,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete (@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable @NotNull @Positive Long id) { //nao pode vazio e somente numero positivo
         return courseRepository.findById(id).map(recordFound -> {
             courseRepository.delete(recordFound);
             return ResponseEntity.noContent().<Void>build(); //necessário cast para vazio pois delete retorna VOID
