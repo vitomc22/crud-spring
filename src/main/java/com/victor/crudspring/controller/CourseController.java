@@ -27,7 +27,9 @@ public class CourseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Course> findByid(@PathVariable @NotNull @Positive Long id) { //nao pode vazio e somente numero positivo
-        return courseRepository.findById(id).map(recordFound -> ResponseEntity.ok().body(recordFound)).orElse(ResponseEntity.notFound().build());
+        return courseRepository.findById(id).map(recordFound ->
+                ResponseEntity.ok().body(recordFound))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -48,7 +50,7 @@ public class CourseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable @NotNull @Positive Long id) { //nao pode vazio e somente numero positivo
         return courseRepository.findById(id).map(recordFound -> {
-            courseRepository.delete(recordFound);
+            courseRepository.deleteById(recordFound.getId());
             return ResponseEntity.noContent().<Void>build(); //necessário cast para vazio pois delete retorna VOID
         }).orElse(ResponseEntity.notFound().build());
     }
