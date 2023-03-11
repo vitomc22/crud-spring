@@ -1,6 +1,6 @@
 package com.victor.crudspring.controller;
 
-import com.victor.crudspring.model.Course;
+import com.victor.crudspring.dto.CourseDTO;
 import com.victor.crudspring.service.CourseService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -22,23 +22,23 @@ public class CourseController {
     }
 
     @GetMapping
-    public @ResponseBody List<Course> list() {
+    public @ResponseBody List<CourseDTO> list() {
         return courseService.list();
     }
 
     @GetMapping("/{id}")
-    public Course findByid(@PathVariable @NotNull @Positive Long id) { //nao pode vazio e somente numero positivo
+    public CourseDTO findByid(@PathVariable @NotNull @Positive Long id) { //nao pode vazio e somente numero positivo
         return courseService.findByid(id);
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Course create(@RequestBody @Valid Course course) {
+    public CourseDTO create(@RequestBody @Valid CourseDTO course) {
         return courseService.create(course);
     }
 
     @PutMapping("/{id}")
-    public Course update(@PathVariable Long id, @RequestBody @Valid Course course) {
+    public CourseDTO update(@PathVariable Long id, @RequestBody @Valid @NotNull CourseDTO course) {
         return courseService.update(id, course);
     }
 
