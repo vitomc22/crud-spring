@@ -1,0 +1,15 @@
+version: "3.2"
+services:
+
+  mysql-server-db:
+    container_name: mysql-server-db
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+        MYSQL_ROOT_PASSWORD: 123
+        MYSQL_DATABASE: CrudAngular
+        MYSQL_USER: victor
+        MYSQL_PASSWORD: 123
+    ports:
+      - "3306:3306"
