@@ -10,6 +10,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -38,6 +41,9 @@ public class Course {
     @Column(length = 10, nullable = false)
     @Convert(converter = StatusConverter.class)
     private Status status = Status.ACTIVE; //valor padrao
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "course")
+    private final List<Lesson> lessons = new ArrayList<>();
 
     public Course() {
     }
@@ -80,6 +86,10 @@ public class Course {
 
     public void setStatus(@NotNull Status status) {
         this.status = status;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
     }
 
     @Override

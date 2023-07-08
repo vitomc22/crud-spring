@@ -2,8 +2,8 @@ package com.victor.crudspring;
 
 import com.victor.crudspring.enums.Category;
 import com.victor.crudspring.model.Course;
+import com.victor.crudspring.model.Lesson;
 import com.victor.crudspring.repository.CourseRepository;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,22 +12,28 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class CrudSpringApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CrudSpringApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CrudSpringApplication.class, args);
+    }
 
-	@Bean // managed by the Spring container
-	CommandLineRunner initDatabse(CourseRepository courseRepository){
-		return args -> {
-			courseRepository.deleteAll();
+    @Bean
+        // managed by the Spring container
+    CommandLineRunner initDatabse(CourseRepository courseRepository) {
+        return args -> {
+            courseRepository.deleteAll();
 
-			Course c = new Course();
-			c.setName("Angular com spring");
-			c.setCategory(Category.FRONT_END);
+            Course c = new Course();
+            c.setName("Angular com spring");
+            c.setCategory(Category.FRONT_END);
 
-			courseRepository.save(c);
+            Lesson l = new Lesson();
+            l.setName("Bom dia meu consgrado");
+            l.setYoutubeUrl("/ql70nnlZt-Y");
+            l.setCourse(c);
+            c.getLessons().add(l);
+            courseRepository.save(c);
 
-		};
+        };
 
-	}
+    }
 }
