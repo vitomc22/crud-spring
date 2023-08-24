@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Entity
 public class Lesson {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(length = 100, nullable = false)
     private String name;
@@ -38,6 +38,10 @@ public class Lesson {
         return youtubeUrl;
     }
 
+    public void setYoutubeUrl(String youtubeUrl) {
+        this.youtubeUrl = youtubeUrl;
+    }
+
     public Course getCourse() {
         return course;
     }
@@ -46,7 +50,7 @@ public class Lesson {
         this.course = course;
     }
 
-    public void setYoutubeUrl(String youtubeUrl) {
-        this.youtubeUrl = youtubeUrl;
+    public Long getId() {
+        return id;
     }
 }
