@@ -24,7 +24,7 @@ dependencies {
     api 'org.springframework.boot:spring-boot-starter-web:3.1.2'
     api 'org.projectlombok:lombok:1.18.24'
     api 'org.springframework.boot:spring-boot-starter-validation:3.0.5'
-    runtimeOnly 'org.springframework.boot:spring-boot-devtools:3.0.5'    
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools:3.0.5'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.0.5'
 }
 
@@ -58,11 +58,15 @@ jar {
 }
 
 dependencies {
-
-
     testImplementation 'junit:junit:4.13.1'
     testImplementation 'junit:junit:4.13.1'
     testImplementation 'junit:junit:4.13.1'
     testImplementation 'junit:junit:4.13.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
+test {
+    useJUnit()
+    include 'src/test/java/com/victor/crudspring/**'
+    testLogging.showStandardStreams = true
 }
