@@ -42,7 +42,7 @@ public class Course {
     @Convert(converter = StatusConverter.class)
     private Status status = Status.ACTIVE; //valor padrao
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "course")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "course")
     private final List<Lesson> lessons = new ArrayList<>();
 
     public Course() {

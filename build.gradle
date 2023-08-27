@@ -58,5 +58,11 @@ jar {
 }
 
 dependencies {
+
+
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 }
