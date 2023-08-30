@@ -67,6 +67,4 @@ dependencies {
 
 test {
     useJUnit()
-    include 'src/test/java/com/victor/crudspring/**'
-    testLogging.showStandardStreams = true
 }
