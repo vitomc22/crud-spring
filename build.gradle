@@ -9,6 +9,7 @@ plugins {
     id 'org.springframework.boot' version '3.1.2'
     id 'java-library'
     id 'maven-publish'
+    id 'com.bmuschko.docker-java-application' version '7.1.0'
 }
 
 repositories {
@@ -26,6 +27,8 @@ dependencies {
     api 'org.springframework.boot:spring-boot-starter-validation:3.0.5'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools:3.0.5'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.0.5'
+    testImplementation 'org.junit.jupiter:junit-jupiter-migrationsupport:5.8.0'
+
 }
 
 group = 'com.victor'
@@ -57,14 +60,7 @@ jar {
     }
 }
 
-dependencies {
-    testImplementation 'junit:junit:4.13.1'
-    testImplementation 'junit:junit:4.13.1'
-    testImplementation 'junit:junit:4.13.1'
-    testImplementation 'junit:junit:4.13.1'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}
 
 test {
-    useJUnit()
+    useJUnitPlatform()
 }
